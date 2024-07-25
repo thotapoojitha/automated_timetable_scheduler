@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0fdf4;
+            color: #064e3b;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #064e3b;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            gap: 2rem; /* Added gap between cards */
+            margin-top: 2rem;
+        }
+        .card {
+            background-color: #d1fae5;
+            border: 1px solid #065f46;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+            width: 250px;
+            text-align: center;
+        }
+        .card h2 {
+            margin-top: 0;
+        }
+        .card button {
+            background-color: #065f46;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+        }
+        .card button:hover {
+            background-color: #064e3b;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Welcome, Student!</h1>
+    </div>
+    <div class="container">
+        <div class="card">
+            <h2>Timetables</h2>
+            <p>View your course timetables and schedules.</p>
+            <form action="{% url 'view_timetable' %}" method="get">
+                <button type="submit">View Timetable</button>
+            </form>
+        </div>
+        <div class="card">
+            <h2>Calculate CGPA</h2>
+            <p>Calculate your CGPA based on your grades and credit hours.</p>
+            <form action="{% url 'calculate_cgpa' %}" method="get">
+                <button type="submit">Calculate CGPA</button>
+            </form>
+        </div>
+        <div class="card">
+            <h2>Resume Screening</h2>
+            <p>Screen your resume and get career recommendations.</p>
+            <form action="{% url 'resume_screening' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <button type="submit">Resume Screening</button>
+            </form>
+        </div>
+        <div class="card">
+            <h2>Course Recommendation</h2>
+            <p>Get a recommendation for a course similar to one you're interested in.</p>
+            <form action="{% url 'select_course' %}" method="get">
+                <button type="submit">Course Recommendation</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

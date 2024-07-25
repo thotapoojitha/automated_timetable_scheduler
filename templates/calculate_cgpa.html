@@ -1,0 +1,129 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculate CGPA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0fdf4;
+            color: #064e3b;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #064e3b;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 2rem;
+        }
+        .section {
+            width: 60%;
+            background-color: #d1fae5;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border: 1px solid #065f46;
+        }
+        .section h2 {
+            color: #388e3c;
+            margin-bottom: 10px;
+        }
+        .course {
+            margin-bottom: 10px;
+        }
+        .course label {
+            display: inline-block;
+            width: 45%;
+            margin-bottom: 5px;
+        }
+        .course input {
+            width: 80%;
+            padding: 5px;
+            margin-top: 5px;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        .buttons button {
+            background-color: #065f46;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            cursor: pointer;
+            padding: 0.5rem 1.5rem;
+            margin-right: 10px;
+        }
+        .buttons button:hover {
+            background-color: #064e3b;
+        }
+        #cgpaResult {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #064e3b;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Calculate CGPA</h1>
+    </div>
+    <div class="container">
+        <div class="section">
+            <h2>Enter Your Marks and Credit Hours</h2>
+            <form id="cgpaForm">
+                <div id="coursesContainer">
+                    <div class="course">
+                        <label>Course 1 Marks: <input type="number" name="marks[]" min="0" max="100"></label>
+                        <label>Credit Hours: <input type="number" name="credits[]" min="1"></label>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <button type="button" onclick="addCourse()">Add Another Course</button>
+                    <button type="button" onclick="calculateCGPA()">Calculate CGPA</button>
+                </div>
+            </form>
+            <div id="cgpaResult"></div>
+        </div>
+    </div>
+
+    <script>
+        function addCourse() {
+            const coursesContainer = document.getElementById('coursesContainer');
+            const courseCount = coursesContainer.getElementsByClassName('course').length + 1;
+            const newCourse = document.createElement('div');
+            newCourse.className = 'course';
+            newCourse.innerHTML = `<label>Course ${courseCount} Marks: <input type="number" name="marks[]" min="0" max="100"></label>
+                                   <label>Credit Hours: <input type="number" name="credits[]" min="1"></label>`;
+            coursesContainer.appendChild(newCourse);
+        }
+
+        function calculateCGPA() {
+            const marks = document.getElementsByName('marks[]');
+            const credits = document.getElementsByName('credits[]');
+            let totalPoints = 0;
+            let totalCredits = 0;
+
+            for (let i = 0; i < marks.length; i++) {
+                const mark = parseFloat(marks[i].value);
+                const credit = parseFloat(credits[i].value);
+
+                // Convert marks to grade points on a 10-point scale
+                let gradePoint = mark / 10;
+
+                totalPoints += gradePoint * credit;
+                totalCredits += credit;
+            }
+
+            const cgpa = totalPoints / totalCredits;
+            document.getElementById('cgpaResult').innerText = `Your CGPA is: ${cgpa.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>

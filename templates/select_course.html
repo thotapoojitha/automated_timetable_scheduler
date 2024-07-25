@@ -1,0 +1,115 @@
+<!-- select_course.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Course</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e8f5e9; /* Light green background */
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #2e7d32; /* Dark green */
+        }
+        .select-box {
+            margin-bottom: 20px;
+        }
+        .select-box label {
+            display: block;
+            margin-bottom: 5px;
+            color: #2e7d32;
+        }
+        .select-box select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #4caf50;
+            border-radius: 4px;
+            background-color: #f1f8e9;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .button-container button {
+            background-color: #4caf50; /* Green button */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .button-container button:hover {
+            background-color: #388e3c; /* Darker green on hover */
+        }
+        .recommended-courses {
+            margin-top: 20px;
+        }
+        .recommended-courses h3 {
+            color: #2e7d32;
+        }
+        .recommended-courses ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .recommended-courses li {
+            background-color: #a5d6a7;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .copyright {
+            text-align: center;
+            color: red;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Select a Course</h2>
+        <form action="" method="post">  <!-- Form action is empty to post to the same URL -->
+            {% csrf_token %}
+            <div class="select-box">
+                <label for="selected-course">Type or select a course you like:</label><br>
+                <select id="selected-course" name="selected_course">
+                    {% for course in course_list %}
+                        <option value="{{ course }}">{{ course }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="button-container">
+                <button type="submit">Show Recommended Courses</button>
+            </div>
+        </form>
+        
+        <!-- Display recommended courses if available -->
+        <div class="recommended-courses">
+            {% if recommended_courses %}
+                <h3>Recommended Courses based on your interests:</h3>
+                <ul>
+                    {% for course in recommended_courses %}
+                        <li>{{ course }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        <div class="copyright">
+            <p>Copyright reserved by Coursera and Respective Course Owners</p>
+        </div>
+    </div>
+</body>
+</html>

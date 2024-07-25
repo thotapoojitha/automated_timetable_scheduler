@@ -1,0 +1,199 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TimeTable</title>
+    <link rel="stylesheet" href="{% static 'main/style.css' %}">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        nav {
+            width: 100%;
+            background-color: #000;
+            padding: 20px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index:1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .home-navbar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; 
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+            margin-right: auto;
+            margin-left:-10px;
+        }
+
+        .nav-items {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-items ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-items ul li {
+            list-style: none;
+            position: relative; /* Needed for dropdown */
+        }
+
+        .nav-items ul li a {
+            text-decoration: none;
+            color: #fff; /* Make navigation item color white */
+            padding: 10px;
+            font-size: 14px;
+            transition: 0.4s all;
+        }
+
+        .nav-items ul li a:hover {
+            font-size: 17px;
+            color: #22c6af;
+            transition: 0.4s all;
+        }
+
+        .nav-items ul li .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+            top: 45px; /* Add some space below the Login button */
+        }
+
+        .nav-items ul li .dropdown-content a {
+            color: #272727;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: 0.4s all;
+        }
+
+        .nav-items ul li .dropdown-content a:hover {
+            background-color: #ddd;
+            color: #000;
+        }
+
+        .nav-items ul li.active .dropdown-content {
+            display: block;
+        }
+
+        .content {
+            margin-top: 100px; 
+            padding: 0;
+        }
+
+        section {
+            margin-bottom: 50px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+        }
+
+        section h1 {
+            margin-top: 0;
+        }
+
+        #home, #about, #contact {
+            padding:0;
+            height: 100vh; 
+            scroll-margin-top: 100px
+        }
+        .home-image {
+            margin-top: 0px;
+        }
+
+        .home-image img {
+            width: 100%;
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="home-navbar">
+                <div class="title">Timetable Scheduler</div>
+                <div class="nav-items">
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li class="login-dropdown" id="login">
+                            <a href="#">Login</a>
+                            <div class="dropdown-content" id="dropdown-content">
+                                <a href="{%url 'admin_login'%}">Admin Login</a>
+                                <a href="#">Staff Login</a>
+                                <a href="{%url 'student_login'%}">Student Login</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="content">
+        <section id="home">
+            <div class="home-image">
+                <img src="{% static 'img/vect.jpg' %}" alt="Vector Image">
+            </div>
+        </section>
+        <section id="about">
+            <h1>About Us</h1>
+            <p>This is the about section.</p>
+        </section>
+        <section id="contact">
+            <h1>Contact Us</h1>
+            <p>This is the contact section.</p>
+        </section>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var loginDropdown = document.getElementById('login');
+            var dropdownContent = document.getElementById('dropdown-content');
+
+            loginDropdown.addEventListener('click', function(event) {
+                event.preventDefault();
+                loginDropdown.classList.toggle('active');
+            });
+
+            dropdownContent.addEventListener('click', function(event) {
+                event.stopPropagation();
+            });
+
+            window.addEventListener('click', function(event) {
+                if (!loginDropdown.contains(event.target)) {
+                    loginDropdown.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
